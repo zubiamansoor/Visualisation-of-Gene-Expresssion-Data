@@ -2,16 +2,18 @@
 
 library(shiny)
 
-# Define UI for application that draws a histogram
+# installing the package GEOquery
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
 BiocManager::install("GEOquery")
+library(GEOquery)
 
-library(GEOquery) 
+# install the following packages 
 library(tidyverse)
 library(stringr)
 
+# extract data on phenotype and assay
 all_data = getGEO("GSE21935") 
 all_data = all_data$GSE21935_series_matrix.txt.gz 
 
@@ -25,6 +27,7 @@ x <- as.data.frame(t(head(assay, 10)))
 # extract names of genes
 gene_names <- colnames(x)
 
+# Define UI for application that generates density plots
 ui <- fluidPage(
     # Application title
     titlePanel("Visualisation of Gene expression data"),
